@@ -7,7 +7,7 @@ const MoviePage = () => {
 
   useEffect(() => {
     console.log("movie", params.movie);
-    fetch(`http://www.omdbapi.com/?apikey=9883fcaf&i=tt1285016`)
+    fetch(`http://www.omdbapi.com/?apikey=&i=tt1285016`)
       .then(res => res.json())
       .then(data => {
         console.log("search", data);
