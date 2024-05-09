@@ -1,0 +1,251 @@
+:root {
+  --main-dark-color: #2b2d42;
+  --main-gray-color: #8d99ae;
+  --main-white-color: #edf2f4;
+}
+
+* {
+  font-family: "Roboto Slab", serif;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  width: 95%;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+body {
+  background-color: var(--main-dark-color);
+  color: var(--main-white-color);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: var(--main-gray-color);
+  height: 100vh;
+  width: 20%;
+  border-right: 1px solid var(--main-dark-color);
+  /* padding: 1em; */
+}
+.sidebar__menu {
+  font-size: 0.8rem;
+}
+
+.sidebar__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.4rem;
+}
+.sidebar__list__item {
+  padding: 1rem;
+  font-size: 1.35rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+.sidebar__list__item a {
+  text-decoration: none;
+  color: var(--main-dark-color);
+}
+.sidebar__break {
+  border: 1px dashed var(--main-dark-color);
+  width: 50%;
+  margin-left: 8%;
+  /* margin: 0 auto; */
+  /* width: 100%; */
+}
+.icon {
+  /* margin-right: 0.5rem; */
+  color: var(--main-dark-color);
+}
+
+/* hero */
+
+.hero {
+  position: relative;
+  width: 100%;
+  max-height: 250px;
+}
+
+.hero__image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.5);
+}
+.hero__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 250px;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+  margin-bottom: 0.4em;
+  font-weight: 400;
+}
+
+.hero__form {
+  margin-top: 1em;
+}
+
+.hero__search {
+  border-radius: 25px;
+  border: none;
+  opacity: 0.8;
+  font-size: 1.5rem;
+  text-indent: 10px;
+}
+.movie__search {
+  text-indent: 10px;
+  /* width: 100%; */
+  font-size: 1.2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: none;
+  opacity: 0.8;
+}
+.movie__search:focus {
+  outline: none;
+}
+/* navbar  */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 4px solid var(--main-gray-color); */
+  color: var(--main-dark-color);
+  padding: 0.5em 1em;
+  background: var(--main-gray-color);
+  border-top: 3px solid var(--main-dark-color);
+  border-bottom: 3px solid var(--main-dark-color);
+}
+.navbar__title {
+  font-size: 1.5rem;
+}
+.navbar__icon {
+  font-size: 2rem;
+}
+
+.navbar__search {
+  position: relative;
+  /* width: 100%; */
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.navbar__search__button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: var(--main-gray-color);
+  border: none;
+  /* padding: 1em; */
+  cursor: pointer;
+}
+
+/*movie card */
+.movie__card {
+  border-radius: 5px;
+  width: 200px;
+  margin: 1em 0.5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.movie__card__image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px 5px 0 0;
+}
+
+.movie__card:hover {
+  opacity: 0.5;
+}
+
+/* movie card detials */
+.movie__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  padding: 1em;
+}
+.movie__image {
+  justify-self: start;
+  display: flex;
+  flex-direction: row;
+  object-fit: contain;
+  width: 400px;
+}
+.movie__descriptions {
+  margin-left: 1em;
+  display: flex;
+  margin-top: 2em;
+  max-width: 400px;
+  /* align-items: center; */
+  justify-content: start;
+  flex-direction: column;
+  height: 550px;
+}
+.movie__title {
+  font-size: 3rem;
+  margin-bottom: 0.2em;
+  font-weight: bold;
+}
+.movie__details {
+  font-size: 1.5rem;
+  color: var(--main-gray-color);
+  margin-bottom: 1em;
+}
+.movie__synopsis {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.movie__button {
+  align-items: center;
+  background-color: crimson;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  font-size: 16px !important;
+  padding: 4px 20px 4px 8px;
+  align-self: flex-start;
+  margin-top: 0.5em;
+  border: none;
+  padding: 0.5em 1em;
+}
+
+.card__container {
+  display: grid;
+  margin-top: 1em;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  justify-items: center;
+}
+.card__overlay {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  z-index: 999px;
+}
+.card__overlay__title {
+  color: red;
+  font-size: 1.5rem;
+}
