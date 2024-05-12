@@ -1,34 +1,56 @@
 import "./App.css";
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/HomePage";
-import Movies from "./pages/MoviesPage";
-import Movie from "./pages/MoviePage";
+import MoviesPage from "./pages/MoviesPage";
+import MoviePage from "./pages/MoviePage";
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [clickedMovie, setClickedMovie] = useState(null);
+
+  const handleShowOverlay = id => {
+    setClickedMovie(id);
+  };
+
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("e.target.value", e.target.value);
-    if (e.target.value !== "") {
-      // searchMovies();
+
+    if (searchValue !== "") {
+      navigate(`/movies/${searchValue}`);
+      e.target.reset();
     }
   };
   const handleChange = e => {
-    console.log("e.target.value", e.target.value);
     setSearchValue(e.target.value);
   };
 
+  const handleClick = () => {
+    setToggleSidebar(!toggleSidebar);
+  };
   return (
     <>
-      <Navbar handleSubmit={handleSubmit} handleChange={handleChange} />
+      <Navbar handleSubmit={handleSubmit} handleChange={handleChange} handleClick={handleClick} />
+      <Sidebar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies/" element={<Movies />} />
-        <Route path="/movies/:movieSearch" element={<Movies />} />
-        <Route path="/movie/:movieId" element={<Movie />} />
+        <Route path="/" element={<Home clickedMovie={clickedMovie} handleShowOverlay={handleShowOverlay} />} />
+        {/* /issue with the routing porituin not updating when clicking search* */}
+        <Route
+          path="/movies"
+          element={<MoviesPage clickedMovie={clickedMovie} handleShowOverlay={handleShowOverlay} />}
+        />
+        <Route
+          path="/movies/:movieSearch"
+          element={<MoviesPage clickedMovie={clickedMovie} handleShowOverlay={handleShowOverlay} />}
+        />
+        <Route path="/movie/:movieId" element={<MoviePage />} />
+        {/* // not found movie page */}
+        <Route path="*" element={<MoviePage />} />
       </Routes>
     </>
   );

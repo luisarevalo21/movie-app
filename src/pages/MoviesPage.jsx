@@ -1,34 +1,65 @@
 import React, { useState, useEffect } from "react";
 
 import MovieCard from "../components/MovieCard";
+import LoadingCard from "../components/LoadingCard";
 import { useParams } from "react-router-dom";
-
-const MoviesPage = () => {
+import { VITE_API_KEY } from "../utility/apiKey";
+import { randomSearch } from "../utility/search";
+const MoviesPage = ({ clickedMovie, handleShowOverlay }) => {
   const [movies, setMovies] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-
   const params = useParams();
+  const [searchedMovie, setSearchedMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const searchMovies = () => {
-    if (searchValue !== "") {
-      fetch(`http://www.omdbapi.com/?apikey=&s=${searchValue}`)
-        .then(res => res.json())
-        .then(data => setMovies(data.Search.slice(0, 5)));
-    }
+  const searchMovies = searchString => {
+    setIsLoading(true);
+    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&s=${searchString}`)
+      .then(res => res.json())
+      .then(data => {
+        setMovies(data.Search.slice(0, 5));
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
-    console.log("params movie", params.movie);
-    fetch(`http://www.omdbapi.com/?apikey=&s=batman`)
-      .then(res => res.json())
-      .then(data => setMovies(data.Search.slice(0, 5)));
-  }, []);
+    if (params.movieSearch) {
+      searchMovies(params.movieSearch);
+      setSearchedMovie(params.movieSearch);
+    } else {
+      const randomSearchString = randomSearch();
+      searchMovies(randomSearchString);
+      setSearchedMovie(randomSearchString);
+    }
+  }, [params.movieSearch]);
 
-  const movieCards = movies.map(movie => (
-    <MovieCard key={movie.imdbID} title={movie.title} id={movie.imdbID} movieImage={movie.Poster} />
-  ));
+  const movieCards = isLoading ? (
+    <>
+      <LoadingCard />
+      <LoadingCard />
+      <LoadingCard />
+      <LoadingCard />
+      <LoadingCard />
+    </>
+  ) : (
+    movies.map(movie => (
+      <MovieCard
+        key={movie.imdbID}
+        title={movie.Title}
+        id={movie.imdbID}
+        clickedMovie={clickedMovie}
+        handleShowOverlay={handleShowOverlay}
+        movieImage={movie.Poster}
+      />
+    ))
+  );
+
   return (
     <div className="container">
+      <h3 className="movie__search__title">
+        Searched for: <span className="movie__search__value">{searchedMovie}</span>
+      </h3>
+
+      {/* {isLoading && <LoadingCard />} */}
       <div className="card__container">{movieCards}</div>
     </div>
   );

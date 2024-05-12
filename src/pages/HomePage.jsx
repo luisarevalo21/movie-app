@@ -3,16 +3,17 @@ import { randomSearch } from "../utility/search";
 import Sidebar from "../components/Sidebar";
 import Hero from "../components/Hero";
 import MovieCard from "../components/MovieCard";
-const HomePage = () => {
+import { VITE_API_KEY } from "../utility/apiKey";
+import { useLocation } from "react-router-dom";
+
+const HomePage = ({ clickedMovie, handleShowOverlay }) => {
   const [movies, setMovies] = useState([]);
+  const [searchValue, setSearchValue] = useState(randomSearch());
 
   useEffect(() => {
-    const search = randomSearch();
-
-    fetch(`http://www.omdbapi.com/?apikey=&s=${search}`)
+    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&s=${searchValue}`)
       .then(res => res.json())
       .then(data => {
-        console.log("search", data);
         setMovies(data.Search.slice(0, 5));
       });
   }, []);
@@ -22,19 +23,19 @@ const HomePage = () => {
       <Hero />
 
       <div className="movie__container">
+        <h3>
+          Searched for: <span className="movie__search__value">{searchValue}</span>
+        </h3>
         {movies &&
           movies.map(movie => (
-            <MovieCard movieImage={movie.Poster} />
-            // <div className="movie__container" key={movie.imdbID}>
-            //   <img src={movie.Poster} alt="" className="movie__image" />
-            //   <div className="movie__descriptions">
-            //     <h3 className="movie__title">{movie.Title}</h3>
-            //     <p className="movie__details">{movie.Year}</p>
-            //     <button className="movie__button">
-            //       <span>play icon</span>Watch
-            //     </button>
-            //   </div>
-            // </div>
+            <MovieCard
+              movieImage={movie.Poster}
+              id={movie.imdbID}
+              title={movie.Title}
+              key={movie.imdbID}
+              clickedMovie={clickedMovie}
+              handleShowOverlay={handleShowOverlay}
+            />
           ))}
       </div>
     </div>

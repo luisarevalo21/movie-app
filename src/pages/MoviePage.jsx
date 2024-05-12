@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import LoadingCard from "../components/LoadingCard";
+import { VITE_API_KEY } from "../utility/apiKey";
+
 const MoviePage = () => {
   const params = useParams();
   const [movie, setMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    console.log("movie", params.movie);
-    fetch(`http://www.omdbapi.com/?apikey=&i=tt1285016`)
+  const searchMovies = movieId => {
+    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&i=${movieId}`)
       .then(res => res.json())
       .then(data => {
-        console.log("search", data);
-        setMovie(data.Search);
+        setMovie(data);
       });
-  }, []);
+  };
+  useEffect(() => {
+    if (params.movieId) {
+      setIsLoading(true);
+      searchMovies(params.movieId);
+      setIsLoading(false);
+    }
+
+    return () => {
+      // setMovie(null);
+    };
+  }, [params.movieId]);
+
+  if (movie === null || isLoading) {
+    return <LoadingCard />;
+  }
+  // if (movie === null)
+  //   return (
+  //     <div className="container" style={{ textAlign: "center" }}>
+  //       <h1>Movie not found</h1>
+  //       <h2>Try searching for movies</h2>
+  //     </div>
+  //   );
 
   return (
     <div className="container">
-      <div className="movie__container">
-        <img
-          src="https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
-          alt=""
-          className="movie__image"
-        />
-
-        <div className="movie__descriptions">
-          <h3 className="movie__title">Title</h3>
-
-          <p className="movie__details">date . time . rating</p>
-
-          <p>Overview:</p>
-          <p className="movie__synopsis">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo ullam, quod quas tempora quaerat laboriosam
-            iusto culpa deleniti in similique totam maxime eaque eveniet velit perspiciatis assumenda sunt perferendis
-            quibusdam.
-          </p>
-
-          <button className="movie__button">
-            <span>play icon</span>Watch
-          </button>
-        </div>
+      {/* <div className="movie__container"> */}
+      <img src={movie.Poster} alt="" className="movie__image" />
+      <div className="movie__descriptions">
+        <h3 className="movie__title">{movie.Title}</h3>
+        <p className="movie__details">
+          {movie.Released} - {movie.Runtime} - {movie.Ratings[0].Value}
+        </p>
+        <p>Overview:</p>
+        <p className="movie__synopsis">{movie.Plot}</p>
+        <button className="movie__button">
+          <span className="material-symbols-outlined">play_arrow</span>Watch
+        </button>
       </div>
+      {/* </div> */}
     </div>
   );
 };

@@ -23,13 +23,24 @@ body {
 }
 
 .sidebar {
+  position: fixed;
+  height: calc(100vh - 50px);
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  transform: translate(100%);
+  opacity: 0%;
+  transition: all 0.5s ease-in-out;
   background: var(--main-gray-color);
-  height: 100vh;
-  width: 20%;
-  border-right: 1px solid var(--main-dark-color);
-  /* padding: 1em; */
+  z-index: 9999;
+}
+
+.show_side_bar {
+  opacity: 100%;
+  transform: translateX(0);
 }
 .sidebar__menu {
   font-size: 0.8rem;
@@ -59,6 +70,9 @@ body {
   margin-left: 8%;
   /* margin: 0 auto; */
   /* width: 100%; */
+}
+.disabled {
+  cursor: not-allowed;
 }
 .icon {
   /* margin-right: 0.5rem; */
@@ -121,6 +135,15 @@ body {
 .movie__search:focus {
   outline: none;
 }
+.movie__search__value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.movie__search__title {
+  margin: 0.5em 0;
+  text-align: center;
+}
 /* navbar  */
 .navbar {
   display: flex;
@@ -157,24 +180,77 @@ body {
   cursor: pointer;
 }
 
+.card__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* display: grid;
+  margin-top: 1em;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  justify-items: center; */
+}
+
+.card__overlay {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 999px;
+}
+.card__overlay--show {
+  display: flex;
+  color: white;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999px;
+}
+
+.card__overlay__title {
+  color: white;
+  font-size: 1.5rem;
+  margin-top: 1em;
+  text-align: center;
+}
+.card__overlay__button {
+  background-color: crimson;
+  border-radius: 10px;
+  color: #fff;
+  padding: 4px 20px 4px 8px;
+  border: none;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+}
 /*movie card */
 .movie__card {
   border-radius: 5px;
-  width: 200px;
+  /* width: 200px; */
+  position: relative;
   margin: 1em 0.5em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
-.movie__card__image {
+.movie__card__image,
+.movie_image {
   width: 100%;
-  height: 300px;
+  height: 400px;
   object-fit: cover;
   object-position: center;
   border-radius: 5px 5px 0 0;
 }
 
-.movie__card:hover {
+/* .movie__card:hover {
   opacity: 0.5;
-}
+} */
 
 /* movie card detials */
 .movie__container {
@@ -185,13 +261,13 @@ body {
   margin-top: 0;
   padding: 1em;
 }
-.movie__image {
+/* .movie__image {
   justify-self: start;
   display: flex;
   flex-direction: row;
   object-fit: contain;
-  width: 400px;
-}
+  width: 200px;
+} */
 .movie__descriptions {
   margin-left: 1em;
   display: flex;
@@ -226,26 +302,41 @@ body {
   font-size: 16px !important;
   padding: 4px 20px 4px 8px;
   align-self: flex-start;
-  margin-top: 0.5em;
+  margin-top: 0.9em;
   border: none;
   padding: 0.5em 1em;
 }
 
-.card__container {
-  display: grid;
-  margin-top: 1em;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
-  justify-items: center;
-}
-.card__overlay {
+.loading__card {
   display: flex;
-  flex-direction: column;
-  opacity: 1;
-  z-index: 999px;
+  width: 70%;
+  justify-content: center;
+  align-items: center;
+  margin: 1em auto;
 }
-.card__overlay__title {
-  color: red;
-  font-size: 1.5rem;
+
+.loading__card__image {
+  width: 100%;
+  height: 300px;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(90deg, #a0a0a0, silver 50%, #a0a0a0);
+  background-size: 200% 100%;
+  -webkit-animation: skeleton-loading-animation 1.5s ease-in-out infinite;
+  animation: skeleton-loading-animation 1.5s ease-in-out infinite;
+  border-radius: 5px;
 }
+
+@keyframes skeleton-loading-animation {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* background: linear-gradient(90deg, #a0a0a0, silver 50%, #a0a0a0);
+    background-size: 200% 100%;
+    -webkit-animation: skeleton-loading-animation 1.5s ease-in-out infinite;
+    animation: skeleton-loading-animation 1.5s ease-in-out infinite;
+    border-radius: 5px; */
