@@ -30,30 +30,23 @@ const MoviePage = () => {
   if (movie === null || isLoading) {
     return <LoadingCard />;
   }
-  // if (movie === null)
-  //   return (
-  //     <div className="container" style={{ textAlign: "center" }}>
-  //       <h1>Movie not found</h1>
-  //       <h2>Try searching for movies</h2>
-  //     </div>
-  //   );
 
   return (
     <div className="container">
-      {/* <div className="movie__container"> */}
-      <img src={movie.Poster} alt="" className="movie__image" />
-      <div className="movie__descriptions">
-        <h3 className="movie__title">{movie.Title}</h3>
-        <p className="movie__details">
-          {movie.Released} - {movie.Runtime} - {movie.Ratings[0].Value}
-        </p>
-        <p>Overview:</p>
-        <p className="movie__synopsis">{movie.Plot}</p>
-        <button className="movie__button">
-          <span className="material-symbols-outlined">play_arrow</span>Watch
-        </button>
+      <div className="movie__container">
+        <img src={movie.Poster} alt="" className="movie__image" />
+        <div className="movie__descriptions">
+          <h3 className="movie__title">{movie.Title}</h3>
+          <p className="movie__details">
+            {movie.Released} - {movie.Runtime} - {movie.Ratings[0].Value}
+          </p>
+          <p>Overview:</p>
+          <p className="movie__synopsis">{movie.Plot}</p>
+          <button className="movie__button">
+            <span className="material-symbols-outlined">play_arrow</span>Watch
+          </button>
+        </div>
       </div>
-      {/* </div> */}
     </div>
   );
 };

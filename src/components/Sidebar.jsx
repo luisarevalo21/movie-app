@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
   return (
@@ -11,17 +11,16 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
           <span className="material-symbols-outlined icon">home</span> <NavLink to="/">Home</NavLink>
         </li>
         <li className="sidebar__list__item" onClick={() => setToggleSidebar(false)}>
-          {/* <span class="material-symbols-outlined">menu</span> */}
-          <span className="material-symbols-outlined icon">theaters</span>
+          <span className="material-symbols-outlined icon active">theaters</span>
           <NavLink to="/movies">Movies</NavLink>
         </li>
 
         <hr className="sidebar__break" />
         <li className="sidebar__list__item disabled">
-          <span className="material-symbols-outlined icon">settings</span> <NavLink to="#">Settings</NavLink>
+          <span className="material-symbols-outlined icon">settings</span> <Link to="#">Settings</Link>
         </li>
         <li className="sidebar__list__item disabled">
-          <span className="material-symbols-outlined icon">help</span> <NavLink to="#">Help</NavLink>
+          <span className="material-symbols-outlined icon">help</span> <Link to="#">Help</Link>
         </li>
       </ul>
     </div>

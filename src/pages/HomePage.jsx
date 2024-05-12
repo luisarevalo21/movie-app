@@ -22,10 +22,10 @@ const HomePage = ({ clickedMovie, handleShowOverlay }) => {
     <div className="container">
       <Hero />
 
+      <h3 className="hero__title">
+        Searched for: <span className="movie__search__value">{searchValue}</span>
+      </h3>
       <div className="movie__container">
-        <h3>
-          Searched for: <span className="movie__search__value">{searchValue}</span>
-        </h3>
         {movies &&
           movies.map(movie => (
             <MovieCard
