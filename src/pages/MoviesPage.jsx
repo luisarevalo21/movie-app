@@ -13,7 +13,7 @@ const MoviesPage = ({ clickedMovie, handleShowOverlay }) => {
 
   const searchMovies = searchString => {
     setIsLoading(true);
-    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&s=${searchString}`, { referrerPolicy: "unsafe_url" })
+    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&s=${searchString}`)
       .then(res => res.json())
       .then(data => {
         setMovies(data.Search.slice(0, 5));
