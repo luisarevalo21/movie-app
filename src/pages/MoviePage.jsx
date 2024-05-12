@@ -9,7 +9,7 @@ const MoviePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const searchMovies = movieId => {
-    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&i=${movieId}`)
+    fetch(`http://www.omdbapi.com/?apikey=9883fcaf&i=${movieId}`)
       .then(res => res.json())
       .then(data => {
         setMovie(data);
