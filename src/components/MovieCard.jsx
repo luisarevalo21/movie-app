@@ -1,28 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//hover effect on card
-//click card shoudl provide details of the movie
-//antoher fetch
-//disable settings and help butons
-//menu in sidebar neesd styling
-//loading spinner show mock data when fetching
-//place hodler card. will need to gogole.
 
 const MovieCard = ({ movieImage, title, id, handleShowOverlay, clickedMovie }) => {
   const navigate = useNavigate();
-  // const [showOverlay, setShowOverlay] = useState(false);
   const handleClick = () => {
-    // setShowOverlay(prev => !prev);
     handleShowOverlay(id);
-    // navigate(`/movie/${id}`);
   };
   const handleNavigate = () => {
     navigate(`/movie/${id}`);
-  };
-  const [hover, setHover] = useState(false);
-
-  const handleMouseEnter = () => {
-    setHover(true);
   };
 
   return (
