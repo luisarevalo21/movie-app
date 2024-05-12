@@ -11,7 +11,7 @@ const HomePage = ({ clickedMovie, handleShowOverlay }) => {
   const [searchValue, setSearchValue] = useState(randomSearch());
 
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=9883fcaf&s=${searchValue}`)
+    fetch(`http://www.omdbapi.com/?apikey=${VITE_API_KEY}&s=${searchValue}`, { referrerPolicy: "unsafe_url" })
       .then(res => res.json())
       .then(data => {
         setMovies(data.Search.slice(0, 5));
