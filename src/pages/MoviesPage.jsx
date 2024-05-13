@@ -10,12 +10,20 @@ const MoviesPage = ({ clickedMovie, handleShowOverlay }) => {
   const params = useParams();
   const [searchedMovie, setSearchedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const searchMovies = searchString => {
     setIsLoading(true);
     fetch(`http://www.omdbapi.com/?apikey=9883fcaf&s=${searchString}`)
       .then(res => res.json())
       .then(data => {
+        if (data.Error) {
+          setError(true);
+          setIsLoading(false);
+          setMovies([]);
+          return;
+        }
+        console.log("data", data);
         setMovies(data.Search.slice(0, 5));
         setIsLoading(false);
       });
@@ -53,6 +61,8 @@ const MoviesPage = ({ clickedMovie, handleShowOverlay }) => {
     ))
   );
 
+  const errorBlock = error && <h2>No results found with that string, try again</h2>;
+
   return (
     <div className="container">
       <h3 className="movie__search__title">
@@ -61,6 +71,7 @@ const MoviesPage = ({ clickedMovie, handleShowOverlay }) => {
 
       {/* {isLoading && <LoadingCard />} */}
       <div className="card__container">{movieCards}</div>
+      <div className="card__container">{errorBlock}</div>
     </div>
   );
 };
